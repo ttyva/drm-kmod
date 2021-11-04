@@ -36,6 +36,7 @@
 
 #ifdef __FreeBSD__
 #include <linux/ratelimit.h>
+#include <linux/workqueue.h>
 #endif
 
 #include "drm_crtc_helper_internal.h"

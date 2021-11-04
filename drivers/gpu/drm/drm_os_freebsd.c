@@ -6,6 +6,10 @@ __FBSDID("$FreeBSD$");
 
 #include <dev/agp/agpreg.h>
 #include <dev/pci/pcireg.h>
+
+#include <dev/iicbus/iicbus.h>
+#include <dev/iicbus/iiconf.h>
+
 #include <linux/cdev.h>
 #undef cdev
 
@@ -138,6 +142,12 @@ MODULE_VERSION(drmn, 2);
 #ifdef CONFIG_AGP
 MODULE_DEPEND(drmn, agp, 1, 1, 1);
 #endif
+DRIVER_MODULE(iicbus, drmn, iicbus_driver, iicbus_devclass, NULL, NULL);
+DRIVER_MODULE(acpi_iicbus, drmn, acpi_iicbus_driver, iicbus_devclass, NULL,
+    NULL);
+MODULE_DEPEND(drmn, iicbus, IICBUS_MINVER, IICBUS_PREFVER, IICBUS_MAXVER);
+MODULE_DEPEND(drmn, iic, 1, 1, 1);
+MODULE_DEPEND(drmn, iicbb, IICBB_MINVER, IICBB_PREFVER, IICBB_MAXVER);
 MODULE_DEPEND(drmn, pci, 1, 1, 1);
 MODULE_DEPEND(drmn, mem, 1, 1, 1);
 MODULE_DEPEND(drmn, linuxkpi, 1, 1, 1);
